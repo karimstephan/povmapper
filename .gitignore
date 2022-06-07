@@ -4,7 +4,8 @@
 .DS_Store
 raw_data/
 *.csv
+*.dta
 **/__pycache__/
 .env
 raw_data
-rawdata/
+**/*.dta
