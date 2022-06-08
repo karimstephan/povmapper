@@ -34,3 +34,4 @@ termcolor
 streamlit
 streamlit_folium
 folium
+geopy
