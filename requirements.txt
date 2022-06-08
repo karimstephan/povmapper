@@ -32,3 +32,5 @@ termcolor
 
 #frontend
 streamlit
+streamlit_folium
+folium
