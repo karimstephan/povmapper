@@ -12,13 +12,17 @@ from PIL import Image
 
 token = 'pk.eyJ1Ijoia3Jva3JvYiIsImEiOiJja2YzcmcyNDkwNXVpMnRtZGwxb2MzNWtvIn0.69leM_6Roh26Ju7Lqb2pwQ'  # your mapbox token
 tileurl = 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.png?access_token=' + str(token)
-img = Image.open("scale.png")
-st.image(img)
 
 #User input
 #don't forget to mention in description for users that it will take the highest level of admin levels
-
-street = st.sidebar.text_input("Street")
+st.sidebar.text('''Hello, welcome to poverty mapper.
+Please enter the street or city or 
+province or country that you would 
+like poverty to be mapped on. 
+We recommend to be as precise 
+as possible. 
+The radius is adjustable in meters.''')
+st.sidebar.image("scale.png", use_column_width=True)
 city = st.sidebar.text_input("City")
 province = st.sidebar.text_input("Province")
 country = st.sidebar.text_input("Country")
@@ -27,11 +31,12 @@ radius = st.sidebar.text_input ("Radius (in meters)")
 # geolocator
 geolocator = Nominatim(user_agent="GTA Lookup")
 geocode = RateLimiter(geolocator.geocode, min_delay_seconds=1)
-location = geolocator.geocode(street+", "+city+", "+province+", "+country)
+location = geolocator.geocode(city+", "+province+", "+country)
 #in the case there is no input from user, to avoid error we added a conditional
 if location is not None:
     lat = location.latitude
     lon = location.longitude
+
 #introducing folium
     m = folium.Map(location=[lat,lon],
                 zoom_start=10,
@@ -40,7 +45,8 @@ if location is not None:
                     control_scale=False)
     Fullscreen().add_to(m)
 
-    pi = 0.4
+    pi = 0.5
+
     if pi <=0.2:
         col = 'lightyellow'
     elif pi <= 0.4:
