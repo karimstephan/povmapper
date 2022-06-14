@@ -14,23 +14,16 @@ from dotenv import load_dotenv, find_dotenv
 import json
 from haversine import inverse_haversine, Direction
 import time
+import requests
 
+
+#setting up the progress bar on streamlit
 my_bar = st.progress(0)
 
 for percent_complete in range(100):
      time.sleep(0.1)
      my_bar.progress(percent_complete + 1)
 my_bar.empty()
-
-#placeholder for poverty index while waiting for model to be ready
-pi = 0.4
-
-#API URL and poverty index input
-    #  url= https://y-ig6qgbx3oa-ew.a.run.app/predict
-    #  params = dict(lat=lat,lon=lon)
-    #  response.requests.get(url, params=params)
-    #  prediction= response.json()
-    #  pi = prediction['value']
 
 # information from le Wagon for tiles in Folium map
 token = 'pk.eyJ1Ijoia3Jva3JvYiIsImEiOiJja2YzcmcyNDkwNXVpMnRtZGwxb2MzNWtvIn0.69leM_6Roh26Ju7Lqb2pwQ'  # your mapbox token
@@ -49,14 +42,28 @@ ee.Initialize(credentials)
 ##Initializing Google Earth Engine
 #ee.Initialize(credentials))
 
+
+#function with API, Population count based on gridded population
 def frontend_manipulation(lat,lon, radius_):    
-#Population count
+    
+    # #API URL and poverty index input
+    # url= 'https://povapi-ig6qgbx3oa-ew.a.run.app/predict?'
+    # params = dict(lat=lat,lon=lon)
+    # response=requests.get(url, params=params)
+    # prediction= response.json()
+    # pi = prediction['value']
+    
+    #pi placeholder
+    pi=40
+    
+    #Population count based on lat, lon
     pop_image_collection= ee.ImageCollection("CIESIN/GPWv411/GPW_Population_Count")
     #scale remains constant
     scale = 1000
-    #grid_size in km
+    #in the case there is no radius value entered by user, it will automatically be 1
     if radius_ == '':
         radius_=1
+    #grid_size in km
     grid_size =int(f'{radius_}')
     radius=(grid_size * 2**0.5 )/2
 
@@ -75,14 +82,16 @@ def frontend_manipulation(lat,lon, radius_):
     df = df[1:]
     df = df.sort_values('time')
     df.reset_index(inplace=True, drop=True)
+    #'1577836800000' is the value for 2020 data
     df = df.loc[df['time'] == 1577836800000]
 
-#variables to input in interactive map  
+    #variables to input in interactive map  
     population_count= int(df['population_count'].sum())
-    pop_pov_line = int(population_count*pi)
+    pop_pov_line = int(population_count*(pi/100))
+    
     #st.text(f'Location: {city}, {province}, {country}. lat, lon: {lat}, {lon}')
-    st.text(f'Radius: {radius_} km')
-    st.text(f'Poverty Index : {pi}')
+    st.text(f'Latitude: {lat}     Longitude: {lon}    Radius: {radius_} km')
+    st.text(f'Poverty Index : {pi}%')
     st.text(f'Total population(2020): {population_count}')
     st.text(f'Population living below the poverty line: {pop_pov_line}')   
 
@@ -96,15 +105,15 @@ def frontend_manipulation(lat,lon, radius_):
     Fullscreen().add_to(m)
     
 # colors for different pi levels
-    if pi <=0.2:
+    if pi <20:
         col = 'lightyellow'
-    elif pi <= 0.4:
+    elif pi <40:
         col = 'gold'
-    elif pi <= 0.6:
+    elif pi <60:
         col = 'coral'
-    elif pi <= 0.8:
+    elif pi <80:
         col = 'orangered'
-    elif pi <= 1.0:
+    elif pi <=100:
         col = 'firebrick'
 
 #adding folium marker   
@@ -116,13 +125,14 @@ def frontend_manipulation(lat,lon, radius_):
     folium_static(m)
 
 
-#User input
+#Side bar and User input
 st.sidebar.text('''Hello, welcome to Poverty Mapper.
 Please enter coordinates or location name
 that you would like an index of poverty 
 to be calculated and mapped on. 
 The radius is adjustable in 
 kilometers.''')
+st.title('Poverty Mapper')
 st.sidebar.image("scale.png", use_column_width=True)
 radius_ = st.sidebar.text_input ("Radius (in km)", 1)
 user_input = st.sidebar.radio(
@@ -150,5 +160,5 @@ If a map does not appear, please check your spelling.''')
 if user_input == 'Coordinates':
     lat = st.sidebar.number_input('Latitude')
     lon = st.sidebar.number_input('Longitude')
+    
     frontend_manipulation(lat,lon, radius_)
-
