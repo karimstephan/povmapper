@@ -54,9 +54,13 @@ pypi_test:
 pypi:
 	@twine upload dist/* -u $(PYPI_USERNAME)
 
-
 # ----------------------------------
 #      Frontend
 # ----------------------------------
 streamlit:
 	-@streamlit run frontend.py
+# ----------------------------------
+#      API
+# ----------------------------------
+run_api:
+	uvicorn api.fast:app --reload
