@@ -9,5 +9,7 @@ raw_data/
 *.dta
 **/__pycache__/
 .env
+rawdata/
 raw_data
-**/*.dta
+processed_data
+.env
