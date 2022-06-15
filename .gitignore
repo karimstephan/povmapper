@@ -9,3 +9,4 @@ raw_data/
 .env
 raw_data
 **/*.dta
+**/*.json
