@@ -23,7 +23,7 @@ flake8
 pytest
 yapf
 
-# API
+# API lib
 gcsfs
 google-cloud-storage
 earthengine-api
@@ -38,6 +38,14 @@ haversine
 six>=1.14
 memoized-property
 termcolor
+
+#frontend
+streamlit
+streamlit_folium
+folium
+geopy
+
+
 pickle-mixin
 
 #ee

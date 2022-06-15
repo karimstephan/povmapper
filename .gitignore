@@ -1,3 +1,5 @@
+*.json
+**/*.json
 *.egg-info
 .coverage
 .ipynb_checkpoints
@@ -6,6 +8,9 @@ raw_data/
 *.csv
 *.dta
 **/__pycache__/
+.env
+rawdata/
+processed_data
 .env
 raw_data
 **/*.dta

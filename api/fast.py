@@ -6,6 +6,7 @@ import tensorflow
 import tensorflow as tf
 import pickle
 model = pickle.load(open('api/model2.pkl','rb'))
+
 import ee
 import numpy as np
 from skimage.transform import resize
@@ -14,10 +15,13 @@ from haversine import inverse_haversine, Direction
 service_account = 'google-earth-engine@batch-883-povertymapper-352703.iam.gserviceaccount.com'
 credentials = ee.ServiceAccountCredentials(service_account, 'api/credentials.json')
 
+
 # Initialize the library.
 ee.Initialize(credentials)
 
 def get_save_image(lat, lon, grid_size=4, s_date='2021-01-01', e_date= '2021-07-01', img_name='img_1', img_cat='img_cat'):
+
+
 
     lat = float(lat)
     lon = float(lon)
@@ -36,7 +40,9 @@ def get_save_image(lat, lon, grid_size=4, s_date='2021-01-01', e_date= '2021-07-
                                     [coord_ne[1], coord_ne[0]]
                                     ])
 
+
     # print('Starting RGB Image Capture')
+
 
     # Import the Sentinel 2 ImageCollection
     daytime = (ee.ImageCollection('COPERNICUS/S2_SR')
@@ -68,6 +74,7 @@ def get_save_image(lat, lon, grid_size=4, s_date='2021-01-01', e_date= '2021-07-
     # Stack the individual bands to make a 3-D array.
     rgb_img = np.concatenate((np_arr_TCI_R, np_arr_TCI_G, np_arr_TCI_B), 2)
 
+
     rgb_img_256 = resize(rgb_img.astype(float),(256,256)).astype(np.uint8)
 
     # return rgb_img_256
@@ -85,6 +92,7 @@ def get_save_image(lat, lon, grid_size=4, s_date='2021-01-01', e_date= '2021-07-
         defaultValue=0
         )
 
+
     # Get individual band arrays.
     band_arr_avg_rad = nighttime_img_sample.get('avg_rad')
 
@@ -92,7 +100,9 @@ def get_save_image(lat, lon, grid_size=4, s_date='2021-01-01', e_date= '2021-07-
     np_arr_avg_rad = np.array(band_arr_avg_rad.getInfo())
 
     # Resize the array to 256x256
-    rad_img_256 = resize(np_arr_avg_rad, (256, 256)).astype(np.uint8)
+
+    rad_img_256 = resize(np_arr_avg_rad,(256,256)).astype(np.uint8)
+
 
     # Expand the dimensions of the images so they can be concatenated into 3-D.
     rad_img_256 = np.expand_dims(rad_img_256, 2)
@@ -100,6 +110,7 @@ def get_save_image(lat, lon, grid_size=4, s_date='2021-01-01', e_date= '2021-07-
     # return rad_img_256
 
     feat_img = np.concatenate((rgb_img_256, rad_img_256), 2)
+
 
     return feat_img
 
