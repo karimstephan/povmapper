@@ -10,11 +10,17 @@ raw_data/
 **/__pycache__/
 .env
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> master
 rawdata/
 raw_data
 processed_data
 .env
+<<<<<<< HEAD
 =======
 raw_data
 **/*.dta
+>>>>>>> master
+=======
 >>>>>>> master
