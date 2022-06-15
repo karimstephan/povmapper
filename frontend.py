@@ -51,9 +51,10 @@ def frontend_manipulation(lat,lon, radius_):
     response=requests.get(url, params=params)
     prediction= response.json()
     pi = int(prediction['value'])
+    
 
     #pi placeholder
-    # pi=68
+    # pi= 2
     #Population count based on lat, lon
     pop_image_collection= ee.ImageCollection("CIESIN/GPWv411/GPW_Population_Count")
     #scale remains constant
@@ -85,13 +86,17 @@ def frontend_manipulation(lat,lon, radius_):
 
     #variables to input in interactive map
     population_count= int(df['population_count'].sum())
-    pop_pov_line = int(population_count*(int(pi)/100))
+    pi_conversion= {1:100, 2:80, 3:60, 4:40, 5:20}
+    pi_max= pi_conversion[pi]
+    pi_min= pi_max - 20
+    pop_pov_line_min = int(population_count*(int(pi_min))/100)
+    pop_pov_line_max = int(population_count*(int(pi_max))/100)
 
     #st.text(f'Location: {city}, {province}, {country}. lat, lon: {lat}, {lon}')
     st.text(f'Latitude: {lat}     Longitude: {lon}    Radius: {radius_} km')
-    st.text(f'Poverty Index : {pi}%')
+    st.text(f'Poverty Index : {pi_min} - {pi_max}%')
     st.text(f'Total population(2020): {population_count}')
-    st.text(f'Population living below the poverty line: {pop_pov_line}')
+    st.text(f'Population living below the poverty line: {pop_pov_line_min} - {pop_pov_line_max}')
 
     #folium map on streamlit
     m = folium.Map(location=[lat,lon],
