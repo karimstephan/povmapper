@@ -136,7 +136,7 @@ st.sidebar.image("scale.png", use_column_width=True)
 radius_ = st.sidebar.text_input ("Radius (in km)", 4)
 user_input = st.sidebar.radio(
      "Select if you would like to enter coordinates or location",
-     ('Coordinates', 'Location'))
+     ('Location', 'Coordinates'))
 if user_input == 'Location':
     locat = st.sidebar.text_input("Location (city and/or province and/or country)")
 
