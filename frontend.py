@@ -54,15 +54,14 @@ def frontend_manipulation(lat,lon, radius_):
     # pi = prediction['value']
     
     #pi placeholder
-    pi=40
-    
+    pi=68
     #Population count based on lat, lon
     pop_image_collection= ee.ImageCollection("CIESIN/GPWv411/GPW_Population_Count")
     #scale remains constant
     scale = 1000
     #in the case there is no radius value entered by user, it will automatically be 1
     if radius_ == '':
-        radius_=1
+        radius_=4
     #grid_size in km
     grid_size =int(f'{radius_}')
     radius=(grid_size * 2**0.5 )/2
@@ -104,6 +103,7 @@ def frontend_manipulation(lat,lon, radius_):
                 )
     Fullscreen().add_to(m)
     
+    
 # colors for different pi levels
     if pi <20:
         col = 'lightyellow'
@@ -124,7 +124,6 @@ def frontend_manipulation(lat,lon, radius_):
     fill=True,).add_to(m)
     folium_static(m)
 
-
 #Side bar and User input
 st.sidebar.text('''Hello, welcome to Poverty Mapper.
 Please enter coordinates or location name
@@ -134,7 +133,7 @@ The radius is adjustable in
 kilometers.''')
 st.title('Poverty Mapper')
 st.sidebar.image("scale.png", use_column_width=True)
-radius_ = st.sidebar.text_input ("Radius (in km)", 1)
+radius_ = st.sidebar.text_input ("Radius (in km)", 4)
 user_input = st.sidebar.radio(
      "Select if you would like to enter coordinates or location",
      ('Coordinates', 'Location'))
@@ -150,7 +149,6 @@ if user_input == 'Location':
     if location is not None:
         lat = location.latitude
         lon = location.longitude
-
         frontend_manipulation(lat,lon, radius_)
 
     else:
@@ -160,5 +158,5 @@ If a map does not appear, please check your spelling.''')
 if user_input == 'Coordinates':
     lat = st.sidebar.number_input('Latitude')
     lon = st.sidebar.number_input('Longitude')
-    
     frontend_manipulation(lat,lon, radius_)
+    
