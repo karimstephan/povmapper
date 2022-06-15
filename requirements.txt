@@ -35,13 +35,21 @@ fastapi
 six>=1.14
 memoized-property
 termcolor
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> master
 
 #frontend
 streamlit
 streamlit_folium
 folium
 geopy
+<<<<<<< HEAD
+=======
+=======
 
+>>>>>>> master
 pickle-mixin
 
 #ee
@@ -49,4 +57,8 @@ haversine
 scikit-image
 numpy
 earthengine-api
+<<<<<<< HEAD
+>>>>>>> master
+=======
 
+>>>>>>> master
