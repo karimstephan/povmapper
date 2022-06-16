@@ -109,15 +109,15 @@ def frontend_manipulation(lat,lon, radius_):
 
 
     # colors for different pi levels
-    if pi <20:
+    if pi_min <20:
         col = 'lightyellow'
-    elif pi <40:
+    elif pi_min <40:
         col = 'gold'
-    elif pi <60:
+    elif pi_min <60:
         col = 'coral'
-    elif pi <80:
+    elif pi_min <80:
         col = 'orangered'
-    elif pi <=100:
+    elif pi_min <=100:
         col = 'firebrick'
 
 #adding folium marker
