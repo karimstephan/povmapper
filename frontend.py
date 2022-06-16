@@ -29,8 +29,8 @@ token = 'pk.eyJ1Ijoia3Jva3JvYiIsImEiOiJja2YzcmcyNDkwNXVpMnRtZGwxb2MzNWtvIn0.69le
 tileurl = 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.png?access_token=' + str(token)
 
 #functioning login to EE (not applicable to docker)
-service_account = 'google-earth-engine@batch-883-povertymapper-352703.iam.gserviceaccount.com'
-credentials = ee.ServiceAccountCredentials(service_account,'api/credentials.json')
+service_account = 'annuka@poverty-mapper.iam.gserviceaccount.com'
+credentials = ee.ServiceAccountCredentials(service_account, '/Users/annuka/Downloads/poverty-mapper-deef500638d8.json')
 ee.Initialize(credentials)
 
 #not functioning login to EE (applicable to docker):
@@ -46,19 +46,20 @@ ee.Initialize(credentials)
 def frontend_manipulation(lat,lon, radius_):
 
     #API URL and poverty index input
-    url = 'http://127.0.0.1:8000/predict?'
+    url = 'https://povmapper-v0-3-p4pgsvggtq-uc.a.run.app/predict?'
     params = dict(lat=lat,lon=lon)
     response=requests.get(url, params=params)
     prediction= response.json()
     pi = int(prediction['value'])
+    
 
     #pi placeholder
-    # pi=68
+    # pi= 2
     #Population count based on lat, lon
     pop_image_collection= ee.ImageCollection("CIESIN/GPWv411/GPW_Population_Count")
     #scale remains constant
     scale = 1000
-    #in the case there is no radius value entered by user, it will automatically be 1
+    #in the case there is no radius value entered by user, it will automatically be 4
     if radius_ == '':
         radius_=4
     #grid_size in km
@@ -85,13 +86,17 @@ def frontend_manipulation(lat,lon, radius_):
 
     #variables to input in interactive map
     population_count= int(df['population_count'].sum())
-    pop_pov_line = int(population_count*(int(pi)/100))
+    pi_conversion= {1:100, 2:80, 3:60, 4:40, 5:20}
+    pi_max= pi_conversion[pi]
+    pi_min= pi_max - 20
+    pop_pov_line_min = int(population_count*(int(pi_min))/100)
+    pop_pov_line_max = int(population_count*(int(pi_max))/100)
 
     #st.text(f'Location: {city}, {province}, {country}. lat, lon: {lat}, {lon}')
     st.text(f'Latitude: {lat}     Longitude: {lon}    Radius: {radius_} km')
-    st.text(f'Poverty Index : {pi}%')
+    st.text(f'Poverty Index : {pi_min} - {pi_max}%')
     st.text(f'Total population(2020): {population_count}')
-    st.text(f'Population living below the poverty line: {pop_pov_line}')
+    st.text(f'Population living below the poverty line: {pop_pov_line_min} - {pop_pov_line_max}')
 
     #folium map on streamlit
     m = folium.Map(location=[lat,lon],
@@ -104,15 +109,15 @@ def frontend_manipulation(lat,lon, radius_):
 
 
     # colors for different pi levels
-    if pi <20:
+    if pi_min <20:
         col = 'lightyellow'
-    elif pi <40:
+    elif pi_min <40:
         col = 'gold'
-    elif pi <60:
+    elif pi_min <60:
         col = 'coral'
-    elif pi <80:
+    elif pi_min <80:
         col = 'orangered'
-    elif pi <=100:
+    elif pi_min <=100:
         col = 'firebrick'
 
 #adding folium marker
@@ -159,4 +164,9 @@ If a map does not appear, please check your spelling.''')
 if user_input == 'Coordinates':
     lat = st.sidebar.number_input('Latitude')
     lon = st.sidebar.number_input('Longitude')
-    frontend_manipulation(lat,lon, radius_)
+    
+    if ((lat>1) and (lon>1)):
+        frontend_manipulation(lat,lon, radius_)
+    else:
+        st.text ('''Please enter values for latitude and longitude.
+If a map does not appear, please ensure you have entered both values.''')
