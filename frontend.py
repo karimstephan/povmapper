@@ -29,8 +29,8 @@ token = 'pk.eyJ1Ijoia3Jva3JvYiIsImEiOiJja2YzcmcyNDkwNXVpMnRtZGwxb2MzNWtvIn0.69le
 tileurl = 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.png?access_token=' + str(token)
 
 #functioning login to EE (not applicable to docker)
-service_account = 'annuka@poverty-mapper.iam.gserviceaccount.com'
-credentials = ee.ServiceAccountCredentials(service_account, '/Users/annuka/Downloads/poverty-mapper-deef500638d8.json')
+service_account = 'heroku@batch-883-povertymapper.iam.gserviceaccount.com.com'
+credentials = ee.ServiceAccountCredentials(service_account, 'api/credentials.json')
 ee.Initialize(credentials)
 
 #not functioning login to EE (applicable to docker):
@@ -46,12 +46,15 @@ ee.Initialize(credentials)
 def frontend_manipulation(lat,lon, radius_):
 
     #API URL and poverty index input
-    url = 'https://povmapper-v0-3-p4pgsvggtq-uc.a.run.app/predict?'
+
+
+
+    url = 'https://povmapper-v0-4-p4pgsvggtq-ew.a.run.app/predict?'
     params = dict(lat=lat,lon=lon)
     response=requests.get(url, params=params)
     prediction= response.json()
     pi = int(prediction['value'])
-    
+
 
     #pi placeholder
     # pi= 2
@@ -164,7 +167,7 @@ If a map does not appear, please check your spelling.''')
 if user_input == 'Coordinates':
     lat = st.sidebar.number_input('Latitude')
     lon = st.sidebar.number_input('Longitude')
-    
+
     if ((lat>1) and (lon>1)):
         frontend_manipulation(lat,lon, radius_)
     else:

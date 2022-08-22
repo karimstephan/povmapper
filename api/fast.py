@@ -5,15 +5,19 @@ import keras
 import tensorflow
 import tensorflow as tf
 import pickle
-model = pickle.load(open('api/model2.pkl','rb'))
+# model = pickle.load(open('api/model2.pkl','rb'))
 
 import ee
 import numpy as np
 from skimage.transform import resize
 from haversine import inverse_haversine, Direction
 
-service_account = 'google-earth-engine@batch-883-povertymapper-352703.iam.gserviceaccount.com'
+service_account = 'heroku@batch-883-povertymapper.iam.gserviceaccount.com'
 credentials = ee.ServiceAccountCredentials(service_account, 'api/credentials.json')
+
+# Check out the link below on how to set up an earth enging cloud project on GCP
+# https://developers.google.com/earth-engine/cloud/earthengine_cloud_project_setup
+# https://developers.google.com/earth-engine/guides/service_account
 
 
 # Initialize the library.

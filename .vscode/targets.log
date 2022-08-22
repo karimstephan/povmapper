@@ -6,9 +6,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
- 
 
-# Make data base, printed on Wed Jun 15 09:46:22 2022
+# Make data base, printed on Mon Aug 22 12:20:56 2022
 
 # Variables
 
@@ -20,8 +19,6 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 ELECTRON_NO_ATTACH_CONSOLE = 1
 # environment
 HOMEBREW_NO_ANALYTICS = 1
-# environment
-VSCODE_LOG_NATIVE = false
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
 # automatic
@@ -41,13 +38,9 @@ GOOGLE_APPLICATION_CREDENTIALS = /Users/alexwalbridge/code/10_GCP/wagon-bootcamp
 # makefile (from `Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
 # environment
-VSCODE_VERBOSE_LOGGING = true
-# environment
 __CFBundleIdentifier = com.microsoft.VSCode
 # makefile (from `Makefile', line 47)
 PYPI_USERNAME = <AUTHOR>
-# environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/k1/r7px6rdx6hsdpvv2jd0z1_v40000gn/T/vscode-ipc-ea59fb78-c401-4bbf-9d30-b25f0c9abde0.sock
 # environment
 VSCODE_CWD = /Users/alexwalbridge/code/2_working_folder/karimstephan/povmapper
 # environment
@@ -57,7 +50,7 @@ LSCOLORS = Gxfxcxdxbxegedabagacad
 # environment
 VIRTUAL_ENV = /Users/alexwalbridge/.pyenv/versions/3.8.12/envs/lewagon
 # environment
-VSCODE_LOG_STACK = false
+LaunchInstanceID = 145CF660-70EA-407C-A6BF-3CF9F4DEFCF0
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
@@ -65,11 +58,9 @@ PYENV_ROOT = /Users/alexwalbridge/.pyenv
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.R1KiulAfQ4/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.EEy8dyPgCl/Listeners
 # automatic
 %F = $(notdir $%)
-# environment
-VSCODE_PIPE_LOGGING = true
 # environment
 PWD = /Users/alexwalbridge/code/2_working_folder/karimstephan/povmapper
 # environment
@@ -85,7 +76,7 @@ MAKEFILEPATH = $(shell /usr/bin/xcode-select -print-path 2>/dev/null || echo /De
 # environment
 VSCODE_CLI = 1
 # environment
-VSCODE_CODE_CACHE_PATH = /Users/alexwalbridge/Library/Application Support/Code/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
+VSCODE_CODE_CACHE_PATH = /Users/alexwalbridge/Library/Application Support/Code/CachedData/e4503b30fc78200f846c62cf8091b76ff5547662
 # environment
 LOGNAME = alexwalbridge
 # environment
@@ -113,7 +104,7 @@ USER = alexwalbridge
 # makefile
 .DEFAULT_GOAL := install_requirements
 # environment
-TERM_SESSION_ID = 8BAF0EF6-6604-4B57-9B12-E88CE4D0E218
+TERM_SESSION_ID = 8EFCEC8A-1501-4023-8201-06D84C4E1D86
 # environment
 LESS = -R
 # automatic
@@ -129,7 +120,9 @@ TMPDIR = /var/folders/k1/r7px6rdx6hsdpvv2jd0z1_v40000gn/T/
 # automatic
 *F = $(notdir $*)
 # environment
-VSCODE_IPC_HOOK = /Users/alexwalbridge/Library/Application Support/Code/1.67.2-main.sock
+VSCODE_IPC_HOOK = /Users/alexwalbridge/Library/Application Support/Code/1.70.2-main.sock
+# environment
+MallocNanoZone = 0
 # environment
 PYTHONPATH = /Users/alexwalbridge/code/jalwalb2765/data-challenges/04-Decision-Science:
 # makefile
@@ -143,13 +136,12 @@ TERM_PROGRAM_VERSION = 445
 # environment
 NVM_DIR = /Users/alexwalbridge/.nvm
 # environment
-XPC_SERVICE_NAME = application.com.microsoft.VSCode.284008136.284008142.6593EBC3-4AE5-4130-851B-69653C76B4DC
+XPC_SERVICE_NAME = application.com.microsoft.VSCode.290588011.290588017.7554666E-1AD3-44DF-80EF-7151BD67B257
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
 +F = $(notdir $+)
 # environment
- 
 __CF_USER_TEXT_ENCODING = 0x1F5:0x0:0x0
 # environment
 COMMAND_MODE = unix2003
@@ -167,6 +159,8 @@ LC_ALL = C
 PYENV_VIRTUALENV_DISABLE_PROMPT = 1
 # environment
 PYENV_VIRTUAL_ENV = /Users/alexwalbridge/.pyenv/versions/3.8.12/envs/lewagon
+# environment
+SECURITYSESSIONID = 186a3
 # automatic
 ^F = $(notdir $^)
 # default
@@ -182,9 +176,9 @@ LANG = C
 # environment
 TERM = xterm-256color
 # environment
-VSCODE_PID = 76973
+VSCODE_PID = 12499
 # variable set hash-table stats:
-# Load=85/1024=8%, Rehash=0, Collisions=2/111=2%
+# Load=83/1024=8%, Rehash=0, Collisions=2/109=2%
 
 # Pattern-specific Variable Values
 
@@ -244,7 +238,7 @@ pypi:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-06-06 12:09:36
+#  Last modified 2022-06-15 16:23:09
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -312,6 +306,7 @@ clean:
 # automatic
 # + := 
 # automatic
+ 
 # | := 
 # automatic
 # < := 
@@ -330,6 +325,14 @@ clean:
 	@rm -fr povmapper.egg-info
 	
 
+streamlit:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 62):
+	@streamlit run frontend.py
+	
+
 ftest:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -346,6 +349,14 @@ pypi_test:
 	@twine upload -r testpypi dist/* -u $(PYPI_USERNAME)
 	
 
+run_api:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  commands to execute (from `Makefile', line 67):
+	uvicorn api.fast:app --reload
+	
+
 install:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -355,7 +366,7 @@ install:
 	
 
 # files hash-table stats:
-# Load=15/1024=1%, Rehash=0, Collisions=0/34=0%
+# Load=17/1024=2%, Rehash=0, Collisions=0/36=0%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -367,6 +378,6 @@ install:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Wed Jun 15 09:46:22 2022
+# Finished Make data base on Mon Aug 22 12:20:56 2022
 
  
